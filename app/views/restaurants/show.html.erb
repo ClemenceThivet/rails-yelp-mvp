@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @restaurant.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @restaurant.address %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @restaurant.category %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @restaurant.phone_number %>
+</p>
+
+<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<%= link_to 'Back', restaurants_path %>
+
+<div class="container">
+  <div class="row">
+    <h2 class="text-center">Reviews <small><%= link_to "add", '#', class: "toggle-form" %></small></h2>
+    <ul class="list-unstyled">
+      <% @restaurant.reviews.each do |review| %>
+      <li><%= review.content %> - <% review.rating.times do %>
+        <i class="fa fa-star"></i>
+        <% end %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="container review-form" style="display: none;">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <h1>Submit review for <%= @restaurant.name %> </h1>
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :content %>
+        <%= f.input :rating, collection: (0..5) %>
+        <%= f.submit "Submit" %>
+      <% end %>
+    </div>
+  </div>
+</div>
